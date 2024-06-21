@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 const Task = ({ task }) => {
   const [isChecked, setIsChecked] = useState(false);

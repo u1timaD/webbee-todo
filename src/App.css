@@ -41,7 +41,6 @@
   color: #888;
 }
 
-
 input[type='text'] {
   border: none;
   padding: 15px;
@@ -51,24 +50,21 @@ input[type='text'] {
   font-size: 15px;
 }
 
-
 input[type='text']:focus-visible {
   outline: none;
 }
 
 button:focus,
 button:focus-visible {
-  outline: none
+  outline: none;
 }
 
 input[type='text']::placeholder {
   color: rgba(192, 189, 189, 0.985);
 }
 
-
-
 .todo {
-  background-color: #2D2D2D;
+  background-color: #2d2d2d;
   border-radius: 10px;
   padding: 30px;
   min-width: 1004px;
@@ -101,7 +97,6 @@ input[type='text']::placeholder {
   padding: 0;
   gap: 10px;
   font-size: 20px;
-
 }
 
 .todo-task__list {
@@ -154,13 +149,3 @@ form {
   gap: 10px;
 }
 
-
-
-.task__btn {
-  
-}
-
-.btn--delete,
-.btn--cancel {
-  background-color: #D93D3D;
-}

@@ -18,6 +18,10 @@ const TaskList = ({ task, index, handleClickDel, handleClickEdit }) => {
     }
   };
 
+  useEffect(() => {
+    setCurrentTask(task);
+  }, [task]);
+
   return (
     <li className="todo-task__list task">
       <label htmlFor="task-1" className="task__label">

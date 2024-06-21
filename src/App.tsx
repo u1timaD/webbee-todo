@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './App.css';
-import TaskList from './components/TaskList/TaskList';
+import TaskItem from './components/TaskItem/TaskItem';
 import TodoForm from './components/TodoForm/TodoForm';
 import Filter from './components/Filter/Filter';
 
@@ -51,7 +51,7 @@ function App() {
                   task.toLowerCase().includes(taskFilter.toLowerCase())
                 )
                 .map((task, idx) => (
-                  <TaskList
+                  <TaskItem
                     key={idx}
                     index={idx}
                     task={task}

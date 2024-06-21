@@ -1,8 +1,4 @@
-import { useState } from "react";
-
-const TaskEdit = ({ currentTask, setCurrentTask}) => {
-  
-
+const TaskEdit = ({ currentTask, setCurrentTask }) => {
   const handleChange = (e) => {
     setCurrentTask(e.target.value);
   };
