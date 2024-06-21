@@ -1,30 +1,22 @@
-# React + TypeScript + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+# Задание 1.1 - ToDo-лист
+#### Используем MVVM фреймворк (React/Vue)
+#### Желательно использовать TypeScript
+#### Отображение листа
+- Отображение списка дел и чекбоксами
+- При нажатии на чекбокс задание помечается как "выполнено"
+#### Добавление записи
+- Ввод заголовка нового дела с инпут
+- По нажатию на "Create new task" в список добавляется новая задача
+- Инпут очищается
+#### Удаление записи
+По нажатию на кнопку Delete задача пропадает из списка
+#### Редактирование записи
+- По нажатию на кнопку Edit задача отображается как редактируемая
+- Появляется инпут для редактирования текста задачи
+- По кнопки Save запись принимает изначальный вид с новым текстом
+- По кнопке Cancel запись принимает изначальный вид со старым текстом (даже если его в процессе поменяли до нажатия кнопки)
+#### Поиск по списку
+- В реальном времени отображаются отфильтрованные записи
+- При пустом поле фильтра отображаются все записи
+- Фильтр работает по принципу "содержит"
+- Фильтр регистронезависимый (not case-sensitive)

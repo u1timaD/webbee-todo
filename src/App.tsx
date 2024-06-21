@@ -1,35 +1,71 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
+import TaskList from './components/TaskList/TaskList';
+import TodoForm from './components/TodoForm/TodoForm';
+import Filter from './components/Filter/Filter';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [tasks, setTasks] = useState([
+    'Задача первая: Закончить отчет по проекту до конца дня.',
+    'Задача вторая: Провести встречу с командой разработчиков в 14:00.',
+    'Задача третья: Обновить документацию по новому релизу.',
+    'Задача четвёртая: Ответить на письма клиентов и партнеров.',
+    'Задача пятая: Подготовить презентацию для совещания в пятницу.',
+  ]);
+
+  const [taskFilter, setTaskFilter] = useState('');
+
+  const handleClickDel = (number) => {
+    setTasks((prev) => {
+      const newTask = [...prev];
+      newTask.splice(number, 1);
+      return newTask;
+    });
+  };
+
+  const handleClickEdit = (currentTask, index) => {
+    setTasks((prevTasks) => {
+      const updatedTasks = [...prevTasks];
+      updatedTasks[index] = currentTask;
+      return updatedTasks;
+    });
+  };
+
+  const handleAddTask = (newTask) => {
+    setTasks([...tasks, newTask]);
+  };
+
+  const handleChangeFilter = (value) => {
+    setTaskFilter(value);
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="todo">
+        <div className="todo-container">
+          <Filter handleChangeFilter={handleChangeFilter} />
+          <div className="todo-task todo-task__wrapper">
+            <ul className="todo-task__item">
+              {tasks
+                .filter((task) =>
+                  task.toLowerCase().includes(taskFilter.toLowerCase())
+                )
+                .map((task, idx) => (
+                  <TaskList
+                    key={idx}
+                    index={idx}
+                    task={task}
+                    handleClickDel={handleClickDel}
+                    handleClickEdit={handleClickEdit}
+                  />
+                ))}
+            </ul>
+          </div>
+          <TodoForm handleAddTask={handleAddTask} />
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
