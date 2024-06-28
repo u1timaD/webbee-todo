@@ -1,13 +1,17 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
-const TodoForm = ({ handleAddTask }) => {
+type FormProps = {
+  handleAddTask: (formValue: string) => void;
+};
+
+const TodoForm: React.FC<FormProps> = ({ handleAddTask }) => {
   const [newTask, setNewTask] = useState('');
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setNewTask(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (newTask.trim()) {
       handleAddTask(newTask);

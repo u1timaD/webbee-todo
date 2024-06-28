@@ -6,7 +6,13 @@ import TodoForm from './components/TodoForm/TodoForm';
 import Filter from './components/Filter/Filter';
 
 function App() {
-  const [tasks, setTasks] = useState([
+
+  type Task = {
+    id: string;
+    name: string;
+  }
+
+  const [tasks, setTasks] = useState<Task[]>([
     { id: uuidv4(), name: 'Задача первая: Закончить отчет по проекту до конца дня.' },
     { id: uuidv4(), name: 'Задача вторая: Провести встречу с командой разработчиков в 14:00.' },
     { id: uuidv4(), name: 'Задача третья: Обновить документацию по новому релизу.' },
@@ -14,13 +20,15 @@ function App() {
     { id: uuidv4(), name: 'Задача пятая: Подготовить презентацию для совещания в пятницу.' },
   ]);
 
+
+
   const [taskFilter, setTaskFilter] = useState('');
 
-  const handleClickDel = (index) => {
+  const handleClickDel = (index: string) => {
     setTasks((prev) => [...prev].filter((item) => item.id !== index));
   };
 
-  const handleClickEdit = (currentTask, index) => {
+  const handleClickEdit = (currentTask: string, index: string) => {
     setTasks((prevTasks) =>
       prevTasks.map((task) =>
         task.id === index ? { ...task, name: currentTask } : task
@@ -28,15 +36,15 @@ function App() {
     );
   };
 
-  const handleAddTask = useCallback((newTask) => {
+  const handleAddTask = useCallback((newTask: string) => {
     setTasks((prevTasks) => [...prevTasks, {id: uuidv4(), name: newTask }]);
   }, []);
 
-  const handleChangeFilter = useCallback((value) => {
+  const handleChangeFilter = useCallback((value: string) => {
     setTaskFilter(value);
   }, []);
 
-  const getFilterTask = (tasksArr) => {
+  const getFilterTask = (tasksArr: Task[]) => {
     return tasksArr.filter((task) =>
       task.name.toLowerCase().includes(taskFilter.toLowerCase())
     );

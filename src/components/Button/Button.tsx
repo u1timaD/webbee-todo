@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const StyledButton = styled.button`
+const StyledButton = styled.button<{ cl?: string }>`
   background-color: ${(props) =>
     props.cl === 'delete' || props.cl === 'cancel' ? '#D93D3D' : '#2d77af'};
   color: white;
@@ -16,7 +16,13 @@ const StyledButton = styled.button`
   }
 `;
 
-const Button = ({ cl, name, handleClick }) => {
+type ButtonProps = {
+  cl?: string,
+  name: string,
+  handleClick: () => void
+};
+
+const Button: React.FC<ButtonProps> = ({ cl, name, handleClick }) => {
   return (
     <StyledButton cl={cl} onClick={handleClick}>
       {name}

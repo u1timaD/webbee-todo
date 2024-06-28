@@ -1,5 +1,11 @@
-const Filter = ({ handleChangeFilter }) => {
-  const handleChange = (e) => {
+import { ChangeEvent } from 'react';
+
+type FilterProps = {
+  handleChangeFilter: (filterValue: string) => void;
+};
+
+const Filter: React.FC<FilterProps> = ({ handleChangeFilter }) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     handleChangeFilter(e.target.value);
   };
 

@@ -1,17 +1,25 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import Button from '../Button/Button';
 
-const TaskList = ({ task, index, number, clickDel, clickEdit }) => {
+type TaskListProps = {
+  task: string;
+  index: string;
+  number: number;
+  clickDel: (index: string) => void;
+  clickEdit: (currentTask: string, index: string) => void;
+}
+
+const TaskList: React.FC<TaskListProps> = ({ task, index, number, clickDel, clickEdit }) => {
   const [edit, setEdit] = useState(false);
 
   const [currentTask, setCurrentTask] = useState(task);
   const [isChecked, setIsChecked] = useState(false);
 
-  const handleChangeTask = (e) => {
+  const handleChangeTask = (e: ChangeEvent<HTMLInputElement>) => {
     setCurrentTask(e.target.value);
   };
 
-  const handleChangeCheckbox = (e) => {
+  const handleChangeCheckbox = (e: ChangeEvent<HTMLInputElement>) => {
     setIsChecked(e.target.checked);
   };
 
@@ -64,19 +72,12 @@ const TaskList = ({ task, index, number, clickDel, clickEdit }) => {
         {edit ? (
           <>
             <Button name={'Save'} handleClick={handleClickSave} />
-            <Button
-              cl={'cancel'}
-              name={'Cancel'}
-              handleClick={handleClickCancel}
+            <Button cl={'cancel'} name={'Cancel'} handleClick={handleClickCancel}
             />
           </>
         ) : (
           <>
-            <Button
-              cl={'delete'}
-              name={'Delete'}
-              handleClick={handleClickDel}
-            />
+            <Button cl={'delete'} name={'Delete'} handleClick={handleClickDel} />
             <Button name={'Edit'} handleClick={handleClickEdit} />
           </>
         )}
