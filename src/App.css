@@ -115,6 +115,7 @@ input[type='text']::placeholder {
   align-items: center;
   gap: 10px;
   width: 100%;
+  color: #2d2d2d;
 }
 
 .task__block {
@@ -124,6 +125,7 @@ input[type='text']::placeholder {
 
 .task__text {
   text-align: left;
+  color: #2d2d2d;
 }
 
 .task__edit {

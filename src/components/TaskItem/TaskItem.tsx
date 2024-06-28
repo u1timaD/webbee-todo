@@ -1,21 +1,38 @@
 import { useEffect, useState } from 'react';
 import Button from '../Button/Button';
-import Task from '../Task/Task';
-import TaskEdit from '../TaskEdit/TaskEdit';
 
-const TaskList = ({ task, index, handleClickDel, handleClickEdit }) => {
+const TaskList = ({ task, index, number, clickDel, clickEdit }) => {
   const [edit, setEdit] = useState(false);
 
   const [currentTask, setCurrentTask] = useState(task);
+  const [isChecked, setIsChecked] = useState(false);
 
-  const handleClickBtn = () => {
-    if (!currentTask.length) {
-      handleClickDel(index);
-      setEdit((prev) => !prev);
-    } else {
-      handleClickEdit(currentTask, index);
-      setEdit((prev) => !prev);
-    }
+  const handleChangeTask = (e) => {
+    setCurrentTask(e.target.value);
+  };
+
+  const handleChangeCheckbox = (e) => {
+    setIsChecked(e.target.checked);
+  };
+
+  const handleClickSave = () => {
+    clickEdit(currentTask, index);
+    setEdit((prev) => !prev);
+  };
+
+  const handleClickDel = () => {
+    clickDel(index);
+    setEdit((prev) => !prev);
+    setEdit(false);
+  };
+
+  const handleClickCancel = () => {
+    setCurrentTask(task);
+    setEdit(false);
+  };
+
+  const handleClickEdit = () => {
+    setEdit(true);
   };
 
   useEffect(() => {
@@ -25,27 +42,32 @@ const TaskList = ({ task, index, handleClickDel, handleClickEdit }) => {
   return (
     <li className="todo-task__list task">
       <label htmlFor="task-1" className="task__label">
-        <span>{index + 1}</span>
+        <span>{number + 1}</span>
         {edit ? (
-          <TaskEdit
-            task={task}
-            currentTask={currentTask}
-            setCurrentTask={setCurrentTask}
+          <input
+            type="text"
+            className="task__edit"
+            name="task-1"
+            value={currentTask}
+            onChange={handleChangeTask}
           />
         ) : (
-          <Task task={task} />
+          <div
+            className={`task__block ${isChecked ? 'task__block--checked' : ''}`}
+          >
+            <input type="checkbox" onChange={handleChangeCheckbox} />
+            <span className="task__text">{task}</span>
+          </div>
         )}
       </label>
       <div className="task-btn__container">
         {edit ? (
           <>
-            <Button name={'Save'} handleClickBtn={handleClickBtn} />
+            <Button name={'Save'} handleClick={handleClickSave} />
             <Button
               cl={'cancel'}
               name={'Cancel'}
-              handleClickBtn={() => {
-                setEdit(false);
-              }}
+              handleClick={handleClickCancel}
             />
           </>
         ) : (
@@ -53,16 +75,9 @@ const TaskList = ({ task, index, handleClickDel, handleClickEdit }) => {
             <Button
               cl={'delete'}
               name={'Delete'}
-              handleClickBtn={() => {
-                handleClickDel(index);
-              }}
+              handleClick={handleClickDel}
             />
-            <Button
-              name={'Edit'}
-              handleClickBtn={() => {
-                setEdit(true);
-              }}
-            />
+            <Button name={'Edit'} handleClick={handleClickEdit} />
           </>
         )}
       </div>

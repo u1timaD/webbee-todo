@@ -16,9 +16,9 @@ const StyledButton = styled.button`
   }
 `;
 
-const Button = ({ cl, name, handleClickBtn }) => {
+const Button = ({ cl, name, handleClick }) => {
   return (
-    <StyledButton cl={cl} onClick={() => handleClickBtn(name)}>
+    <StyledButton cl={cl} onClick={handleClick}>
       {name}
     </StyledButton>
   );

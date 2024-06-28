@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import './App.css';
 import TaskItem from './components/TaskItem/TaskItem';
 import TodoForm from './components/TodoForm/TodoForm';
@@ -6,37 +7,39 @@ import Filter from './components/Filter/Filter';
 
 function App() {
   const [tasks, setTasks] = useState([
-    'Задача первая: Закончить отчет по проекту до конца дня.',
-    'Задача вторая: Провести встречу с командой разработчиков в 14:00.',
-    'Задача третья: Обновить документацию по новому релизу.',
-    'Задача четвёртая: Ответить на письма клиентов и партнеров.',
-    'Задача пятая: Подготовить презентацию для совещания в пятницу.',
+    { id: uuidv4(), name: 'Задача первая: Закончить отчет по проекту до конца дня.' },
+    { id: uuidv4(), name: 'Задача вторая: Провести встречу с командой разработчиков в 14:00.' },
+    { id: uuidv4(), name: 'Задача третья: Обновить документацию по новому релизу.' },
+    { id: uuidv4(), name: 'Задача четвёртая: Ответить на письма клиентов и партнеров.' },
+    { id: uuidv4(), name: 'Задача пятая: Подготовить презентацию для совещания в пятницу.' },
   ]);
 
   const [taskFilter, setTaskFilter] = useState('');
 
-  const handleClickDel = (number) => {
-    setTasks((prev) => {
-      const newTask = [...prev];
-      newTask.splice(number, 1);
-      return newTask;
-    });
+  const handleClickDel = (index) => {
+    setTasks((prev) => [...prev].filter((item) => item.id !== index));
   };
 
   const handleClickEdit = (currentTask, index) => {
-    setTasks((prevTasks) => {
-      const updatedTasks = [...prevTasks];
-      updatedTasks[index] = currentTask;
-      return updatedTasks;
-    });
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === index ? { ...task, name: currentTask } : task
+      )
+    );
   };
 
-  const handleAddTask = (newTask) => {
-    setTasks([...tasks, newTask]);
-  };
+  const handleAddTask = useCallback((newTask) => {
+    setTasks((prevTasks) => [...prevTasks, {id: uuidv4(), name: newTask }]);
+  }, []);
 
-  const handleChangeFilter = (value) => {
+  const handleChangeFilter = useCallback((value) => {
     setTaskFilter(value);
+  }, []);
+
+  const getFilterTask = (tasksArr) => {
+    return tasksArr.filter((task) =>
+      task.name.toLowerCase().includes(taskFilter.toLowerCase())
+    );
   };
 
   return (
@@ -46,19 +49,16 @@ function App() {
           <Filter handleChangeFilter={handleChangeFilter} />
           <div className="todo-task todo-task__wrapper">
             <ul className="todo-task__item">
-              {tasks
-                .filter((task) =>
-                  task.toLowerCase().includes(taskFilter.toLowerCase())
-                )
-                .map((task, idx) => (
-                  <TaskItem
-                    key={idx}
-                    index={idx}
-                    task={task}
-                    handleClickDel={handleClickDel}
-                    handleClickEdit={handleClickEdit}
-                  />
-                ))}
+              {getFilterTask(tasks).map((task, idx) => (
+                <TaskItem
+                  key={task.id}
+                  number={idx}
+                  index={task.id}
+                  task={task.name}
+                  clickDel={handleClickDel}
+                  clickEdit={handleClickEdit}
+                />
+              ))}
             </ul>
           </div>
           <TodoForm handleAddTask={handleAddTask} />
