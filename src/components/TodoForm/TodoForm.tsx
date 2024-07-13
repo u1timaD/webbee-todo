@@ -1,4 +1,6 @@
 import { ChangeEvent, useState } from 'react';
+import { TodoFormStyled } from './TotoForm.styled';
+import Input from '../Input/Input';
 
 type FormProps = {
   handleAddTask: (formValue: string) => void;
@@ -20,19 +22,17 @@ const TodoForm: React.FC<FormProps> = ({ handleAddTask }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        className="from-input"
+    <TodoFormStyled onSubmit={handleSubmit}>
+      <Input
         type="text"
         name="new-task"
-        id=""
         placeholder="добавьте задачу"
         required
         value={newTask}
         onChange={handleChange}
       />
       <button className="btn btn--new-task">Create new task</button>
-    </form>
+    </TodoFormStyled>
   );
 };
 

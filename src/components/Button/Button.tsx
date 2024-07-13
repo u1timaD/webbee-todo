@@ -1,32 +1,15 @@
-import styled from 'styled-components';
-
-const StyledButton = styled.button<{ cl?: string }>`
-  background-color: ${(props) =>
-    props.cl === 'delete' || props.cl === 'cancel' ? '#D93D3D' : '#2d77af'};
-  color: white;
-  text-transform: uppercase;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    outline: 2px solid #2d2d2d;
-  }
-`;
+import { ButtonStyled } from './Button.styled';
 
 type ButtonProps = {
-  cl?: string,
-  name: string,
-  handleClick: () => void
+  name: string;
+  handleClick: () => void;
 };
 
-const Button: React.FC<ButtonProps> = ({ cl, name, handleClick }) => {
+const Button: React.FC<ButtonProps> = ({ name, handleClick }) => {
   return (
-    <StyledButton cl={cl} onClick={handleClick}>
+    <ButtonStyled name={name} onClick={handleClick}>
       {name}
-    </StyledButton>
+    </ButtonStyled>
   );
 };
 

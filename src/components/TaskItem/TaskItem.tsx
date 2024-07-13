@@ -1,5 +1,13 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import Button from '../Button/Button';
+import {
+  ButtonWrapperStyled,
+  TaskItemStyled,
+  TaskLabelStyled,
+  TaskTextStyled,
+} from './TaskItem.styled';
+import Input from '../Input/Input';
+import { Checkbox, Typography } from '@mui/material';
 
 type TaskListProps = {
   task: string;
@@ -7,9 +15,15 @@ type TaskListProps = {
   number: number;
   clickDel: (index: string) => void;
   clickEdit: (currentTask: string, index: string) => void;
-}
+};
 
-const TaskList: React.FC<TaskListProps> = ({ task, index, number, clickDel, clickEdit }) => {
+const TaskList: React.FC<TaskListProps> = ({
+  task,
+  index,
+  number,
+  clickDel,
+  clickEdit,
+}) => {
   const [edit, setEdit] = useState(false);
 
   const [currentTask, setCurrentTask] = useState(task);
@@ -48,41 +62,43 @@ const TaskList: React.FC<TaskListProps> = ({ task, index, number, clickDel, clic
   }, [task]);
 
   return (
-    <li className="todo-task__list task">
-      <label htmlFor="task-1" className="task__label">
+    <TaskItemStyled>
+      <TaskLabelStyled>
         <span>{number + 1}</span>
         {edit ? (
-          <input
+          <Input
             type="text"
-            className="task__edit"
             name="task-1"
             value={currentTask}
             onChange={handleChangeTask}
           />
         ) : (
-          <div
-            className={`task__block ${isChecked ? 'task__block--checked' : ''}`}
-          >
-            <input type="checkbox" onChange={handleChangeCheckbox} />
-            <span className="task__text">{task}</span>
-          </div>
+          <TaskTextStyled>
+            <Checkbox onChange={handleChangeCheckbox} />
+            <Typography
+              sx={{
+                textDecoration: `${isChecked && 'line-through'}`,
+              }}
+            >
+              {task}
+            </Typography>
+          </TaskTextStyled>
         )}
-      </label>
-      <div className="task-btn__container">
+      </TaskLabelStyled>
+      <ButtonWrapperStyled>
         {edit ? (
           <>
-            <Button name={'Save'} handleClick={handleClickSave} />
-            <Button cl={'cancel'} name={'Cancel'} handleClick={handleClickCancel}
-            />
+            <Button name="save" handleClick={handleClickSave} />
+            <Button name="cancel" handleClick={handleClickCancel} />
           </>
         ) : (
           <>
-            <Button cl={'delete'} name={'Delete'} handleClick={handleClickDel} />
-            <Button name={'Edit'} handleClick={handleClickEdit} />
+            <Button name="delete" handleClick={handleClickDel} />
+            <Button name="edit" handleClick={handleClickEdit} />
           </>
         )}
-      </div>
-    </li>
+      </ButtonWrapperStyled>
+    </TaskItemStyled>
   );
 };
 

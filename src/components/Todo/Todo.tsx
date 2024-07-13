@@ -3,6 +3,12 @@ import { v4 as uuidv4 } from 'uuid';
 import TaskItem from '../TaskItem/TaskItem';
 import TodoForm from '../TodoForm/TodoForm';
 import Filter from '../Filter/Filter';
+import {
+  TaskListStyled,
+  TaskWrapperStyled,
+  TodoSectionStyled,
+  TodoWrapperStyled,
+} from './Todo.styled';
 
 const Todo = () => {
   type Task = {
@@ -62,28 +68,26 @@ const Todo = () => {
   };
 
   return (
-    <>
-      <div className="todo">
-        <div className="todo-container">
-          <Filter handleChangeFilter={handleChangeFilter} />
-          <div className="todo-task todo-task__wrapper">
-            <ul className="todo-task__item">
-              {getFilterTask(tasks).map((task, idx) => (
-                <TaskItem
-                  key={task.id}
-                  number={idx}
-                  index={task.id}
-                  task={task.name}
-                  clickDel={handleClickDel}
-                  clickEdit={handleClickEdit}
-                />
-              ))}
-            </ul>
-          </div>
-          <TodoForm handleAddTask={handleAddTask} />
-        </div>
-      </div>
-    </>
+    <TodoSectionStyled>
+      <TodoWrapperStyled>
+        <Filter handleChangeFilter={handleChangeFilter} />
+        <TaskWrapperStyled>
+          <TaskListStyled>
+            {getFilterTask(tasks).map((task, idx) => (
+              <TaskItem
+                key={task.id}
+                number={idx}
+                index={task.id}
+                task={task.name}
+                clickDel={handleClickDel}
+                clickEdit={handleClickEdit}
+              />
+            ))}
+          </TaskListStyled>
+        </TaskWrapperStyled>
+        <TodoForm handleAddTask={handleAddTask} />
+      </TodoWrapperStyled>
+    </TodoSectionStyled>
   );
 };
 

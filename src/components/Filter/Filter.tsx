@@ -1,4 +1,6 @@
 import { ChangeEvent } from 'react';
+import { FilterLabelStyled } from './Filter.styled';
+import Input from '../Input/Input';
 
 type FilterProps = {
   handleChangeFilter: (filterValue: string) => void;
@@ -10,14 +12,14 @@ const Filter: React.FC<FilterProps> = ({ handleChangeFilter }) => {
   };
 
   return (
-    <label htmlFor="filter" className="todo-filter">
-      <input
+    <FilterLabelStyled>
+      <Input
         type="text"
         name="filter"
         placeholder="Фильтр задач"
         onChange={handleChange}
       />
-    </label>
+    </FilterLabelStyled>
   );
 };
 
