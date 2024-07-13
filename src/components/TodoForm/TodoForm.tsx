@@ -1,12 +1,10 @@
 import { ChangeEvent, useState } from 'react';
 import { TodoFormStyled } from './TotoForm.styled';
 import Input from '../Input/Input';
+import { FormProps } from './TodoForm.types';
 
-type FormProps = {
-  handleAddTask: (formValue: string) => void;
-};
 
-const TodoForm: React.FC<FormProps> = ({ handleAddTask }) => {
+const TodoForm = ({ handleAddTask }: FormProps) => {
   const [newTask, setNewTask] = useState('');
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

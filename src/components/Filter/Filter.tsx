@@ -1,12 +1,9 @@
 import { ChangeEvent } from 'react';
 import { FilterLabelStyled } from './Filter.styled';
 import Input from '../Input/Input';
+import { FilterProps } from './Filter.types';
 
-type FilterProps = {
-  handleChangeFilter: (filterValue: string) => void;
-};
-
-const Filter: React.FC<FilterProps> = ({ handleChangeFilter }) => {
+const Filter = ({ handleChangeFilter }: FilterProps) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     handleChangeFilter(e.target.value);
   };

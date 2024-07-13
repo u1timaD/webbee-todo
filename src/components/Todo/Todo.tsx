@@ -9,36 +9,11 @@ import {
   TodoSectionStyled,
   TodoWrapperStyled,
 } from './Todo.styled';
+import { TASKS_DATA } from './Todo.constants';
+import { TaskProps } from './Todo.types';
 
 const Todo = () => {
-  type Task = {
-    id: string;
-    name: string;
-  };
-
-  const [tasks, setTasks] = useState<Task[]>([
-    {
-      id: uuidv4(),
-      name: 'Задача первая: Закончить отчет по проекту до конца дня.',
-    },
-    {
-      id: uuidv4(),
-      name: 'Задача вторая: Провести встречу с командой разработчиков в 14:00.',
-    },
-    {
-      id: uuidv4(),
-      name: 'Задача третья: Обновить документацию по новому релизу.',
-    },
-    {
-      id: uuidv4(),
-      name: 'Задача четвёртая: Ответить на письма клиентов и партнеров.',
-    },
-    {
-      id: uuidv4(),
-      name: 'Задача пятая: Подготовить презентацию для совещания в пятницу.',
-    },
-  ]);
-
+  const [tasks, setTasks] = useState<TaskProps[]>(TASKS_DATA);
   const [taskFilter, setTaskFilter] = useState('');
 
   const handleClickDel = (index: string) => {
@@ -61,7 +36,7 @@ const Todo = () => {
     setTaskFilter(value);
   }, []);
 
-  const getFilterTask = (tasksArr: Task[]) => {
+  const getFilterTask = (tasksArr: TaskProps[]) => {
     return tasksArr.filter((task) =>
       task.name.toLowerCase().includes(taskFilter.toLowerCase())
     );

@@ -8,24 +8,16 @@ import {
 } from './TaskItem.styled';
 import Input from '../Input/Input';
 import { Checkbox, Typography } from '@mui/material';
+import { TaskListProps } from './TaskItem.types';
 
-type TaskListProps = {
-  task: string;
-  index: string;
-  number: number;
-  clickDel: (index: string) => void;
-  clickEdit: (currentTask: string, index: string) => void;
-};
-
-const TaskList: React.FC<TaskListProps> = ({
+const TaskList = ({
   task,
   index,
   number,
   clickDel,
   clickEdit,
-}) => {
+}: TaskListProps) => {
   const [edit, setEdit] = useState(false);
-
   const [currentTask, setCurrentTask] = useState(task);
   const [isChecked, setIsChecked] = useState(false);
 
