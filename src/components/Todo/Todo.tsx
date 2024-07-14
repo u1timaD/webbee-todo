@@ -1,40 +1,11 @@
-import { useCallback, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { useContext } from 'react';
 import TaskItem from '../TaskItem/TaskItem';
-import TodoForm from '../TodoForm/TodoForm';
-import Filter from '../Filter/Filter';
-import {
-  TaskListStyled,
-  TaskWrapperStyled,
-  TodoSectionStyled,
-  TodoWrapperStyled,
-} from './Todo.styled';
-import { TASKS_DATA } from './Todo.constants';
+import { TaskListStyled, TodoSectionStyled } from './Todo.styled';
 import { TaskProps } from './Todo.types';
+import { TodoContext } from '../../App';
 
 const Todo = () => {
-  const [tasks, setTasks] = useState<TaskProps[]>(TASKS_DATA);
-  const [taskFilter, setTaskFilter] = useState('');
-
-  const handleClickDel = (index: string) => {
-    setTasks((prev) => [...prev].filter((item) => item.id !== index));
-  };
-
-  const handleClickEdit = (currentTask: string, index: string) => {
-    setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === index ? { ...task, name: currentTask } : task
-      )
-    );
-  };
-
-  const handleAddTask = useCallback((newTask: string) => {
-    setTasks((prevTasks) => [...prevTasks, { id: uuidv4(), name: newTask }]);
-  }, []);
-
-  const handleChangeFilter = useCallback((value: string) => {
-    setTaskFilter(value);
-  }, []);
+  const { tasks, taskFilter } = useContext(TodoContext);
 
   const getFilterTask = (tasksArr: TaskProps[]) => {
     return tasksArr.filter((task) =>
@@ -44,24 +15,17 @@ const Todo = () => {
 
   return (
     <TodoSectionStyled>
-      <TodoWrapperStyled>
-        <Filter handleChangeFilter={handleChangeFilter} />
-        <TaskWrapperStyled>
-          <TaskListStyled>
-            {getFilterTask(tasks).map((task, idx) => (
-              <TaskItem
-                key={task.id}
-                number={idx}
-                index={task.id}
-                task={task.name}
-                clickDel={handleClickDel}
-                clickEdit={handleClickEdit}
-              />
-            ))}
-          </TaskListStyled>
-        </TaskWrapperStyled>
-        <TodoForm handleAddTask={handleAddTask} />
-      </TodoWrapperStyled>
+      <TaskListStyled>
+        {getFilterTask(tasks).map((task, idx) => (
+          <TaskItem
+            key={task.id}
+            number={idx}
+            id={task.id}
+            task={task.name}
+            done={task.done}
+          />
+        ))}
+      </TaskListStyled>
     </TodoSectionStyled>
   );
 };

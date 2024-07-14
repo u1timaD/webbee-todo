@@ -8,18 +8,6 @@ export const TodoSectionStyled = styled(Box)`
   min-width: 1004px;
 `;
 
-export const TodoWrapperStyled = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  gap: 50px;
-`;
-
-export const TaskWrapperStyled = styled(Box)`
-  display: flex;
-  margin: 0;
-  padding: 0;
-`;
-
 export const TaskListStyled = styled('ul')`
   display: flex;
   flex-direction: column;

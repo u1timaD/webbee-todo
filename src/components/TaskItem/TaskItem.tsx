@@ -1,4 +1,10 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import {
+  ChangeEvent,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import Button from '../Button/Button';
 import {
   ButtonWrapperStyled,
@@ -9,45 +15,51 @@ import {
 import Input from '../Input/Input';
 import { Checkbox, Typography } from '@mui/material';
 import { TaskListProps } from './TaskItem.types';
+import { TodoContext } from '../../App';
 
-const TaskList = ({
-  task,
-  index,
-  number,
-  clickDel,
-  clickEdit,
-}: TaskListProps) => {
-  const [edit, setEdit] = useState(false);
+const TaskItem = ({ task, id, number, done }: TaskListProps) => {
+  const { setTasks } = useContext(TodoContext);
   const [currentTask, setCurrentTask] = useState(task);
-  const [isChecked, setIsChecked] = useState(false);
+  const [edit, setEdit] = useState(false);
 
-  const handleChangeTask = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleOnChangeTask = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setCurrentTask(e.target.value);
-  };
+  }, []);
 
-  const handleChangeCheckbox = (e: ChangeEvent<HTMLInputElement>) => {
-    setIsChecked(e.target.checked);
-  };
+  const handleOnChangeCheckbox = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setTasks((prevTasks) =>
+        prevTasks.map((task) =>
+          task.id === id ? { ...task, done: e.target.checked } : task
+        )
+      );
+    },
+    [setTasks, id]
+  );
 
-  const handleClickSave = () => {
-    clickEdit(currentTask, index);
-    setEdit((prev) => !prev);
-  };
-
-  const handleClickDel = () => {
-    clickDel(index);
-    setEdit((prev) => !prev);
+  const handleOnSave = useCallback(() => {
+    if (currentTask !== task) {
+      setTasks((prevTasks) =>
+        prevTasks.map((task) =>
+          task.id === id ? { ...task, name: currentTask } : task
+        )
+      );
+    }
     setEdit(false);
-  };
+  }, [setTasks, id, currentTask, task]);
 
-  const handleClickCancel = () => {
+  const handleOnDelete = useCallback(() => {
+    setTasks((prev) => [...prev].filter((item) => item.id !== id));
+  }, [setTasks, id]);
+
+  const handleOnCancel = useCallback(() => {
     setCurrentTask(task);
     setEdit(false);
-  };
+  }, [task]);
 
-  const handleClickEdit = () => {
+  const handleOnEdit = useCallback(() => {
     setEdit(true);
-  };
+  }, []);
 
   useEffect(() => {
     setCurrentTask(task);
@@ -60,16 +72,15 @@ const TaskList = ({
         {edit ? (
           <Input
             type="text"
-            name="task-1"
             value={currentTask}
-            onChange={handleChangeTask}
+            onChange={handleOnChangeTask}
           />
         ) : (
           <TaskTextStyled>
-            <Checkbox onChange={handleChangeCheckbox} />
+            <Checkbox onChange={handleOnChangeCheckbox} checked={done} />
             <Typography
               sx={{
-                textDecoration: `${isChecked && 'line-through'}`,
+                textDecoration: done ? 'line-through' : 'none',
               }}
             >
               {task}
@@ -80,13 +91,13 @@ const TaskList = ({
       <ButtonWrapperStyled>
         {edit ? (
           <>
-            <Button name="save" handleClick={handleClickSave} />
-            <Button name="cancel" handleClick={handleClickCancel} />
+            <Button handleClick={handleOnSave}>save</Button>
+            <Button handleClick={handleOnCancel}>cancel</Button>
           </>
         ) : (
           <>
-            <Button name="delete" handleClick={handleClickDel} />
-            <Button name="edit" handleClick={handleClickEdit} />
+            <Button handleClick={handleOnDelete}>delete</Button>
+            <Button handleClick={handleOnEdit}>edit</Button>
           </>
         )}
       </ButtonWrapperStyled>
@@ -94,4 +105,4 @@ const TaskList = ({
   );
 };
 
-export default TaskList;
+export default TaskItem;

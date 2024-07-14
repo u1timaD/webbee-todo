@@ -1,15 +1,14 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useContext } from 'react';
 import { FilterLabelStyled } from './Filter.styled';
 import Input from '../Input/Input';
-import { FilterProps } from './Filter.types';
 import debounce from 'lodash.debounce';
+import { TodoContext } from '../../App';
 
-const Filter = ({ handleChangeFilter }: FilterProps) => {
-
+const Filter = () => {
+  const { setTaskFilter } = useContext(TodoContext);
   const handleOnChange = debounce((e: ChangeEvent<HTMLInputElement>) => {
-    handleChangeFilter(e.target.value);
-  }, 1000);
-
+    setTaskFilter(e.target.value);
+  }, 500);
   return (
     <FilterLabelStyled>
       <Input

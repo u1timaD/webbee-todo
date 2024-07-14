@@ -1,4 +1,6 @@
+import { ReactNode } from 'react';
+
 export interface ButtonProps {
-  name: string;
+  children: ReactNode;
   handleClick: () => void;
 }

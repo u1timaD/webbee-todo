@@ -1,10 +1,10 @@
 import { ButtonStyled } from './Button.styled';
 import { ButtonProps } from './Button.types';
 
-const Button = ({ name, handleClick }: ButtonProps) => {
+const Button = ({ children, handleClick }: ButtonProps) => {
   return (
-    <ButtonStyled name={name} onClick={handleClick}>
-      {name}
+    <ButtonStyled color={children as string} onClick={handleClick}>
+      {children}
     </ButtonStyled>
   );
 };
