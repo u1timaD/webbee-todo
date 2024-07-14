@@ -15,10 +15,10 @@ import {
 import Input from '../Input/Input';
 import { Checkbox, Typography } from '@mui/material';
 import { TaskListProps } from './TaskItem.types';
-import { TodoContext } from '../../App';
+import { TasksContext } from '../../providers/TasksProvider';
 
 const TaskItem = ({ task, id, number, done }: TaskListProps) => {
-  const { setTasks } = useContext(TodoContext);
+  const { setTasks } = useContext(TasksContext);
   const [currentTask, setCurrentTask] = useState(task);
   const [edit, setEdit] = useState(false);
 

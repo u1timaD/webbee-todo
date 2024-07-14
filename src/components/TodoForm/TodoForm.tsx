@@ -1,13 +1,11 @@
 import { ChangeEvent, useCallback, useContext, useState } from 'react';
 import { TodoFormStyled } from './TotoForm.styled';
 import Input from '../Input/Input';
-import { TodoContext } from '../../App';
-import { v4 as uuidv4 } from 'uuid';
+import { TasksContext } from '../../providers/TasksProvider';
 
 const TodoForm = () => {
   const [newTask, setNewTask] = useState('');
-
-  const { tasks, setTasks } = useContext(TodoContext);
+  const { handleAddTask } = useContext(TasksContext);
 
   const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setNewTask(e.target.value);
@@ -15,13 +13,8 @@ const TodoForm = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const createTask = { id: uuidv4(), name: newTask, done: false };
-    if (tasks === null) {
-      setTasks([createTask]);
-    } else {
-      setTasks([...tasks, createTask]);
-      setNewTask('');
-    }
+    handleAddTask(newTask);
+    setNewTask('');
   };
 
   return (

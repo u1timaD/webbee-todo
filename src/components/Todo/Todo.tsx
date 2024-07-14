@@ -1,22 +1,21 @@
 import { useContext } from 'react';
 import TaskItem from '../TaskItem/TaskItem';
 import { TaskListStyled, TodoSectionStyled } from './Todo.styled';
-import { TaskProps } from './Todo.types';
-import { TodoContext } from '../../App';
+import { FilterContext } from '../../providers/FilterProvider';
+import { TasksContext } from '../../providers/TasksProvider';
 
 const Todo = () => {
-  const { tasks, taskFilter } = useContext(TodoContext);
+  const { taskFilter } = useContext(FilterContext);
+  const { tasks } = useContext(TasksContext);
 
-  const getFilterTask = (tasksArr: TaskProps[]) => {
-    return tasksArr.filter((task) =>
-      task.name.toLowerCase().includes(taskFilter.toLowerCase())
-    );
-  };
+  const filteredTasks = tasks.filter((task) =>
+    task.name.toLowerCase().includes(taskFilter.toLowerCase())
+  );
 
   return (
     <TodoSectionStyled>
       <TaskListStyled>
-        {getFilterTask(tasks).map((task, idx) => (
+        {filteredTasks.map((task, idx) => (
           <TaskItem
             key={task.id}
             number={idx}
