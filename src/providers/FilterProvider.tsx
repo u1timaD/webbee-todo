@@ -1,19 +1,28 @@
 import React from 'react';
-import { FilterContextType, FilterProviderType } from './Provider.types';
+import {
+  FilterContextType,
+  FilterProviderType,
+  SetFilterContextType,
+} from './Provider.types';
 
 export const FilterContext = React.createContext<FilterContextType>({
   taskFilter: '',
+});
+
+export const SetFilterContext = React.createContext<SetFilterContextType>({
   setTaskFilter: () => {},
 });
 
-const FilterProvider = ({ children }: FilterProviderType) => {
+const SecondProvider = ({ children }: FilterProviderType) => {
   const [taskFilter, setTaskFilter] = React.useState('');
 
   return (
-    <FilterContext.Provider value={{ taskFilter, setTaskFilter }}>
-      {children}
+    <FilterContext.Provider value={{ taskFilter }}>
+      <SetFilterContext.Provider value={{ setTaskFilter }}>
+        {children}
+      </SetFilterContext.Provider>
     </FilterContext.Provider>
   );
 };
 
-export default FilterProvider;
+export default SecondProvider;

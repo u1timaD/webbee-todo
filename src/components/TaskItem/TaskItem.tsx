@@ -15,15 +15,15 @@ import {
 import Input from '../Input/Input';
 import { Checkbox, Typography } from '@mui/material';
 import { TaskListProps } from './TaskItem.types';
-import { TasksContext } from '../../providers/TasksProvider';
+import { SetTasksContext } from '../../providers/TasksProvider';
 
-const TaskItem = ({ task, id, number, done }: TaskListProps) => {
-  const { setTasks } = useContext(TasksContext);
-  const [currentTask, setCurrentTask] = useState(task);
+const TaskItem = ({ text, id, number, done }: TaskListProps) => {
+  const { setTasks } = useContext(SetTasksContext);
+  const [currentText, setCurrentText] = useState(text);
   const [edit, setEdit] = useState(false);
 
-  const handleOnChangeTask = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setCurrentTask(e.target.value);
+  const handleOnChangeText = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setCurrentText(e.target.value);
   }, []);
 
   const handleOnChangeCheckbox = useCallback(
@@ -38,32 +38,32 @@ const TaskItem = ({ task, id, number, done }: TaskListProps) => {
   );
 
   const handleOnSave = useCallback(() => {
-    if (currentTask !== task) {
+    if (currentText !== text) {
       setTasks((prevTasks) =>
         prevTasks.map((task) =>
-          task.id === id ? { ...task, name: currentTask } : task
+          task.id === id ? { ...task, name: currentText } : task
         )
       );
     }
     setEdit(false);
-  }, [setTasks, id, currentTask, task]);
+  }, [setTasks, id, currentText, text]);
 
   const handleOnDelete = useCallback(() => {
     setTasks((prev) => [...prev].filter((item) => item.id !== id));
   }, [setTasks, id]);
 
   const handleOnCancel = useCallback(() => {
-    setCurrentTask(task);
+    setCurrentText(text);
     setEdit(false);
-  }, [task]);
+  }, [text]);
 
   const handleOnEdit = useCallback(() => {
     setEdit(true);
   }, []);
 
   useEffect(() => {
-    setCurrentTask(task);
-  }, [task]);
+    setCurrentText(text);
+  }, [text]);
 
   return (
     <TaskItemStyled>
@@ -72,8 +72,8 @@ const TaskItem = ({ task, id, number, done }: TaskListProps) => {
         {edit ? (
           <Input
             type="text"
-            value={currentTask}
-            onChange={handleOnChangeTask}
+            value={currentText}
+            onChange={handleOnChangeText}
           />
         ) : (
           <TaskTextStyled>
@@ -83,7 +83,7 @@ const TaskItem = ({ task, id, number, done }: TaskListProps) => {
                 textDecoration: done ? 'line-through' : 'none',
               }}
             >
-              {task}
+              {text}
             </Typography>
           </TaskTextStyled>
         )}

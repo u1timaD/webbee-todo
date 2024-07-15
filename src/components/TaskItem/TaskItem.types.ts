@@ -1,5 +1,5 @@
 export interface TaskListProps {
-  task: string;
+  text: string;
   id: string;
   number: number;
   done: boolean;

@@ -1,15 +1,15 @@
 import Todo from './components/Todo/Todo';
 import Filter from './components/Filter/Filter';
 import TodoForm from './components/TodoForm/TodoForm';
-import FilterProvider from './providers/FilterProvider';
-import TasksProvider from './providers/TasksProvider';
 import { Box } from '@mui/material';
+import MainProvider from './providers/TasksProvider';
+import SecondProvider from './providers/FilterProvider';
 
 function App() {
   return (
     <>
-      <TasksProvider>
-        <FilterProvider>
+      <MainProvider>
+        <SecondProvider>
           <Box
             component="section"
             display="flex"
@@ -22,8 +22,8 @@ function App() {
             <Todo />
             <TodoForm />
           </Box>
-        </FilterProvider>
-      </TasksProvider>
+        </SecondProvider>
+      </MainProvider>
     </>
   );
 }

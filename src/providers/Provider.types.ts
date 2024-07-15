@@ -3,6 +3,9 @@ import { TaskProps } from '../components/Todo/Todo.types';
 
 export interface FilterContextType {
   taskFilter: string;
+}
+
+export interface SetFilterContextType {
   setTaskFilter: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -12,8 +15,10 @@ export interface FilterProviderType {
 
 export interface TasksContextType {
   tasks: TaskProps[];
+}
+
+export interface SetTasksContextType {
   setTasks: React.Dispatch<React.SetStateAction<TaskProps[]>>;
-  handleAddTask: (value: string) => void;
 }
 
 export interface TasksProviderType {

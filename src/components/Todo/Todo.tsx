@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import TaskItem from '../TaskItem/TaskItem';
 import { TaskListStyled, TodoSectionStyled } from './Todo.styled';
 import { FilterContext } from '../../providers/FilterProvider';
@@ -8,9 +8,11 @@ const Todo = () => {
   const { taskFilter } = useContext(FilterContext);
   const { tasks } = useContext(TasksContext);
 
-  const filteredTasks = tasks.filter((task) =>
-    task.name.toLowerCase().includes(taskFilter.toLowerCase())
-  );
+  const filteredTasks = useMemo(() => {
+    return tasks.filter((task) =>
+      task.text.toLowerCase().includes(taskFilter.toLowerCase())
+    );
+  }, [tasks, taskFilter]);
 
   return (
     <TodoSectionStyled>
@@ -20,7 +22,7 @@ const Todo = () => {
             key={task.id}
             number={idx}
             id={task.id}
-            task={task.name}
+            text={task.text}
             done={task.done}
           />
         ))}

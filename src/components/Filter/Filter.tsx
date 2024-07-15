@@ -2,10 +2,10 @@ import { ChangeEvent, useContext } from 'react';
 import { FilterLabelStyled } from './Filter.styled';
 import Input from '../Input/Input';
 import debounce from 'lodash.debounce';
-import { FilterContext } from '../../providers/FilterProvider';
+import { SetFilterContext } from '../../providers/FilterProvider';
 
 const Filter = () => {
-  const { setTaskFilter } = useContext(FilterContext);
+  const { setTaskFilter } = useContext(SetFilterContext);
   const handleOnChange = debounce((e: ChangeEvent<HTMLInputElement>) => {
     setTaskFilter(e.target.value);
   }, 500);
