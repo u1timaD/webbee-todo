@@ -1,23 +1,19 @@
 import { ReactNode } from 'react';
 import { TaskProps } from '../components/Todo/Todo.types';
 
-export interface FilterContextType {
-  taskFilter: string;
-}
+export type FilterContextType = string;
 
-export interface SetFilterContextType {
-  setTaskFilter: React.Dispatch<React.SetStateAction<string>>;
-}
+export type SetFilterContextType = React.Dispatch<React.SetStateAction<string>>;
 
 export interface FilterProviderType {
   children: ReactNode;
 }
 
-export interface TasksContextType {
-  tasks: TaskProps[];
-}
+export type TasksContextType = TaskProps[];
 
-export type SetTasksContextType = React.Dispatch<React.SetStateAction<TaskProps[]>>;
+export type SetTasksContextType = React.Dispatch<
+  React.SetStateAction<TaskProps[]>
+>;
 
 export interface TasksProviderType {
   children: ReactNode;

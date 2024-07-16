@@ -5,7 +5,7 @@ import debounce from 'lodash.debounce';
 import { SetFilterContext } from '../../providers/FilterProvider';
 
 const Filter = () => {
-  const { setTaskFilter } = useContext(SetFilterContext);
+  const setTaskFilter = useContext(SetFilterContext);
   const handleOnChange = debounce((e: ChangeEvent<HTMLInputElement>) => {
     setTaskFilter(e.target.value);
   }, 500);

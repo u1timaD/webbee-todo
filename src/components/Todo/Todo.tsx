@@ -5,8 +5,8 @@ import { FilterContext } from '../../providers/FilterProvider';
 import { TasksContext } from '../../providers/TasksProvider';
 
 const Todo = () => {
-  const { taskFilter } = useContext(FilterContext);
-  const { tasks } = useContext(TasksContext);
+  const taskFilter = useContext(FilterContext);
+  const tasks = useContext(TasksContext);
 
   const filteredTasks = useMemo(() => {
     return tasks.filter((task) =>

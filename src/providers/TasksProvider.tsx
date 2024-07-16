@@ -8,9 +8,7 @@ import {
   TasksProviderType,
 } from './Provider.types';
 
-export const TasksContext = createContext<TasksContextType>({
-  tasks: [],
-});
+export const TasksContext = createContext<TasksContextType>([]);
 
 export const SetTasksContext = createContext<SetTasksContextType>(() => {});
 
@@ -18,7 +16,7 @@ const MainProvider = ({ children }: TasksProviderType) => {
   const [tasks, setTasks] = useState<TaskProps[]>(TASKS_DATA);
 
   return (
-    <TasksContext.Provider value={{ tasks }}>
+    <TasksContext.Provider value={tasks}>
       <SetTasksContext.Provider value={setTasks}>
         {children}
       </SetTasksContext.Provider>

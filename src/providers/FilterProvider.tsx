@@ -5,20 +5,16 @@ import {
   SetFilterContextType,
 } from './Provider.types';
 
-export const FilterContext = React.createContext<FilterContextType>({
-  taskFilter: '',
-});
+export const FilterContext = React.createContext<FilterContextType>('');
 
-export const SetFilterContext = React.createContext<SetFilterContextType>({
-  setTaskFilter: () => {},
-});
+export const SetFilterContext = React.createContext<SetFilterContextType>(() => {});
 
 const SecondProvider = ({ children }: FilterProviderType) => {
   const [taskFilter, setTaskFilter] = React.useState('');
 
   return (
-    <FilterContext.Provider value={{ taskFilter }}>
-      <SetFilterContext.Provider value={{ setTaskFilter }}>
+    <FilterContext.Provider value={ taskFilter }>
+      <SetFilterContext.Provider value={ setTaskFilter }>
         {children}
       </SetFilterContext.Provider>
     </FilterContext.Provider>
