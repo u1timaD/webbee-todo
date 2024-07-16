@@ -17,9 +17,7 @@ export interface TasksContextType {
   tasks: TaskProps[];
 }
 
-export interface SetTasksContextType {
-  setTasks: React.Dispatch<React.SetStateAction<TaskProps[]>>;
-}
+export type SetTasksContextType = React.Dispatch<React.SetStateAction<TaskProps[]>>;
 
 export interface TasksProviderType {
   children: ReactNode;

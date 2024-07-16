@@ -12,16 +12,14 @@ export const TasksContext = createContext<TasksContextType>({
   tasks: [],
 });
 
-export const SetTasksContext = createContext<SetTasksContextType>({
-  setTasks: () => {},
-});
+export const SetTasksContext = createContext<SetTasksContextType>(() => {});
 
 const MainProvider = ({ children }: TasksProviderType) => {
   const [tasks, setTasks] = useState<TaskProps[]>(TASKS_DATA);
 
   return (
     <TasksContext.Provider value={{ tasks }}>
-      <SetTasksContext.Provider value={{ setTasks }}>
+      <SetTasksContext.Provider value={setTasks}>
         {children}
       </SetTasksContext.Provider>
     </TasksContext.Provider>

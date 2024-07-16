@@ -18,7 +18,7 @@ import { TaskListProps } from './TaskItem.types';
 import { SetTasksContext } from '../../providers/TasksProvider';
 
 const TaskItem = ({ text, id, number, done }: TaskListProps) => {
-  const { setTasks } = useContext(SetTasksContext);
+  const setTasks = useContext(SetTasksContext);
   const [currentText, setCurrentText] = useState(text);
   const [edit, setEdit] = useState(false);
 
