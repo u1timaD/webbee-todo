@@ -1,6 +1,5 @@
 import { ChangeEvent, useCallback, useState } from 'react';
 import { TodoFormStyled } from './TotoForm.styled';
-import { v4 as uuidv4 } from 'uuid';
 import Input from '../Input/Input';
 import { setTasks } from '../../redux/todoSlice';
 import { useDispatch } from 'react-redux';
@@ -15,8 +14,7 @@ const TodoForm = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const createTask = { id: uuidv4(), text: newTask, done: false };
-    dispatch(setTasks(createTask));
+    dispatch(setTasks(newTask));
     setNewTask('');
   };
 

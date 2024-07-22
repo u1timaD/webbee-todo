@@ -42,8 +42,9 @@ export const todoSlice = createSlice({
   name: 'todo',
   initialState,
   reducers: {
-    setTasks: (state, action: PayloadAction<TaskProps>) => {
-      state.tasks = [...state.tasks, action.payload];
+    setTasks: (state, action: PayloadAction<string>) => {
+      const createTask = { id: uuidv4(), text: action.payload, done: false };
+      state.tasks = [...state.tasks, createTask];
     },
     setTaskFilter: (state, action: PayloadAction<string>) => {
       state.taskFilter = action.payload;
