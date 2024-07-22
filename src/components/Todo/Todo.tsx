@@ -1,12 +1,12 @@
-import { useContext, useMemo } from 'react';
+import { useMemo } from 'react';
 import TaskItem from '../TaskItem/TaskItem';
 import { TaskListStyled, TodoSectionStyled } from './Todo.styled';
-import { FilterContext } from '../../providers/FilterProvider';
-import { TasksContext } from '../../providers/TasksProvider';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 const Todo = () => {
-  const taskFilter = useContext(FilterContext);
-  const tasks = useContext(TasksContext);
+  const taskFilter = useSelector((state: RootState) => state.todo.taskFilter);
+  const tasks = useSelector((state: RootState) => state.todo.tasks);
 
   const filteredTasks = useMemo(() => {
     return tasks.filter((task) =>
