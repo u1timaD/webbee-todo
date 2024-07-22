@@ -1,13 +1,15 @@
-import { ChangeEvent, useContext } from 'react';
+import { ChangeEvent } from 'react';
 import { FilterLabelStyled } from './Filter.styled';
 import Input from '../Input/Input';
 import debounce from 'lodash.debounce';
-import { SetFilterContext } from '../../providers/FilterProvider';
+import { useDispatch } from 'react-redux';
+import { setTaskFilter } from '../../redux/todoSlice';
 
 const Filter = () => {
-  const setTaskFilter = useContext(SetFilterContext);
+  const dispatch = useDispatch();
+
   const handleOnChange = debounce((e: ChangeEvent<HTMLInputElement>) => {
-    setTaskFilter(e.target.value);
+    dispatch(setTaskFilter(e.target.value));
   }, 500);
 
   return (

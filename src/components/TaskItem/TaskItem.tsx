@@ -1,10 +1,4 @@
-import {
-  ChangeEvent,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import Button from '../Button/Button';
 import {
   ButtonWrapperStyled,
@@ -15,10 +9,15 @@ import {
 import Input from '../Input/Input';
 import { Checkbox, Typography } from '@mui/material';
 import { TaskListProps } from './TaskItem.types';
-import { SetTasksContext } from '../../providers/TasksProvider';
+import { useDispatch } from 'react-redux';
+import {
+  setTaskChecked,
+  setTaskDelete,
+  setTaskSave,
+} from '../../redux/todoSlice';
 
 const TaskItem = ({ text, id, number, done }: TaskListProps) => {
-  const setTasks = useContext(SetTasksContext);
+  const dispatch = useDispatch();
   const [currentText, setCurrentText] = useState(text);
   const [edit, setEdit] = useState(false);
 
@@ -26,31 +25,20 @@ const TaskItem = ({ text, id, number, done }: TaskListProps) => {
     setCurrentText(e.target.value);
   }, []);
 
-  const handleOnChangeCheckbox = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      setTasks((prevTasks) =>
-        prevTasks.map((task) =>
-          task.id === id ? { ...task, done: e.target.checked } : task
-        )
-      );
-    },
-    [setTasks, id]
-  );
+  const handleOnChangeCheckbox = useCallback(() => {
+    dispatch(setTaskChecked(id));
+  }, [id, dispatch]);
 
   const handleOnSave = useCallback(() => {
     if (currentText !== text) {
-      setTasks((prevTasks) =>
-        prevTasks.map((task) =>
-          task.id === id ? { ...task, name: currentText } : task
-        )
-      );
+      dispatch(setTaskSave({ id, currentText }));
     }
     setEdit(false);
-  }, [setTasks, id, currentText, text]);
+  }, [id, currentText, text, dispatch]);
 
   const handleOnDelete = useCallback(() => {
-    setTasks((prev) => [...prev].filter((item) => item.id !== id));
-  }, [setTasks, id]);
+    dispatch(setTaskDelete(id));
+  }, [id, dispatch]);
 
   const handleOnCancel = useCallback(() => {
     setCurrentText(text);
